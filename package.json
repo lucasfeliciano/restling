@@ -1,0 +1,31 @@
+{
+  "name": "restling",
+  "version": "0.0.1",
+  "description": "A nodejs library to make promise based asynchronous http requests.",
+  "main": "restling.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/lucasfeliciano/restling.git"
+  },
+  "keywords": [
+    "resquest",
+    "http",
+    "async",
+    "asynchronous",
+    "promise",
+    "restler"
+  ],
+  "author": "Lucas Feliciano <mail@lucasfeliciano.com> (http://lucasfeliciano.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lucasfeliciano/restling/issues"
+  },
+  "homepage": "https://github.com/lucasfeliciano/restling",
+  "dependencies": {
+    "q": "^1.0.1",
+    "restler": "^3.2.2"
+  }
+}
