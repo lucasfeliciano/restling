@@ -12,7 +12,7 @@ return value (fulfillment) or thrown exception (rejection).
 ```javascript
 rest = require('restling');
 
-rest.get('http://path/api', {param: 1, param:2})
+rest.get('http://path/to/api/', {param: 1, param:2})
 .then(function (data) {
   console.log(data);
 }, function (err) {
