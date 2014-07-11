@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/lucasfeliciano/restling",
   "dependencies": {
+    "lodash": "^2.4.1",
     "q": "^1.0.1",
     "restler": "^3.2.2"
   }
