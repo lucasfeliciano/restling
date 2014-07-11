@@ -78,10 +78,10 @@ All of these attempt to turn the response into a JavaScript object. In order to 
 Note that if you want your request body to be JSON with the `Content-Type: application/json`, you need to
 `JSON.stringify` your object first. Otherwise, it will be sent as `application/x-www-form-urlencoded` and encoded accordingly.
 Also you can use `json()` and `postJson()` methods.
-* `parser` A function that will be called on the returned data. Use any of predefined `restler.parsers`. See parsers section below. Defaults to `restler.parsers.auto`.
+* `parser` A function that will be called on the returned data.
 * `encoding` The encoding of the request body. Defaults to `"utf8"`.
 * `decoding` The encoding of the response body. For a list of supported values see [Buffers](http://nodejs.org/api/buffer.html#buffer_buffer). Additionally accepts `"buffer"` - returns response as `Buffer`. Defaults to `"utf8"`.
-* `headers` A hash of HTTP headers to be sent. Defaults to `{ 'Accept': '*/*', 'User-Agent': 'Restler for node.js' }`.
+* `headers` A hash of HTTP headers to be sent. Defaults to `{ 'Accept': '*/*', 'User-Agent': 'Restling for node.js' }`.
 * `username` Basic auth username. Defaults to empty.
 * `password` Basic auth password. Defaults to empty.
 * `accessToken` OAuth Bearer Token. Defaults to empty.
@@ -136,7 +136,7 @@ rest.post('https://twaud.io/api/v1/upload.json', {
   username: 'danwrong',
   password: 'wouldntyouliketoknow',
   data: {
-    'sound[message]': 'hello from restler!',
+    'sound[message]': 'hello from restling!',
     'sound[file]': rest.file('doug-e-fresh_the-show.mp3', null, 321567, null, 'audio/mpeg')
   }
 }).then(successCallback, errorCallback);
