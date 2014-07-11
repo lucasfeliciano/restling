@@ -8,7 +8,7 @@ Installing
 ----------
 
 ```
-npm install restler
+npm install restling
 ```
 
 Features
