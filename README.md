@@ -99,7 +99,7 @@ Example usage
 var rest = require('./restling');
 
 var successCallback = function(result){
-console.log('Data: ' + error);
+console.log('Data: ' + result.data);
 console.log('Response: ' + result.response);
 };
 
