@@ -4,6 +4,7 @@ var _ = require('lodash');
 var restler = require('restler');
 
 var httpVerbs = ['request', 'get', 'post', 'put', 'del', 'head', 'patch'];
+var jsonMethods =['json', 'postJson', 'putJson'];
 
 // Function that generate the restler wrapper for all the basic http verbs to return promise
 _.forEach(httpVerbs, function(verb){
@@ -13,6 +14,29 @@ _.forEach(httpVerbs, function(verb){
       d.resolve({'data': data, 'response':response});
     }).on('error', function(err, response){
       d.reject({'error': err, 'response': response });
+    }).on('timeout', function(ms){
+      d.reject({'error':{'error': 'timeout',
+                         'message':'Timeout after '+ms+'ms'
+                         }
+                });
+    });
+    return d.promise;
+  };
+});
+
+// Function that generate the restler wrapper for all the json methods to return promise
+_.forEach(jsonMethods, function(verb){
+  exports[verb] = function(url, data, options){
+    var d = Q.defer();
+    restler[verb](url, data, options).on('complete', function(data, response){
+      d.resolve({'data': data, 'response':response});
+    }).on('error', function(err, response){
+      d.reject({'error': err, 'response': response });
+    }).on('timeout', function(ms){
+      d.reject({'error':{'error': 'timeout',
+                         'message':'Timeout after '+ms+'ms'
+                         }
+                });
     });
     return d.promise;
   };
