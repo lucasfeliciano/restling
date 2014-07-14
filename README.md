@@ -14,13 +14,15 @@ npm install restling
 Basic Usage
 -----------
 ```javascript
+var rest = require('restling');
+
 rest.get('http://google.com').then(function(result){
   console.log(result.data);
 }, function(error){
   console.log(error.message);
 });
-
 ```
+
 Features
 --------
 * Easy interface for common operations via http.request
@@ -65,6 +67,18 @@ Create a HEAD request.
 ### patch(url, options)
 
 Create a PATCH request.
+
+### json(url, data, options)
+
+Send json `data` via GET method.
+
+### postJson(url, data, options)
+
+Send json `data` via POST method.
+
+### putJson(url, data, options)
+
+Send json `data` via PUT method.
 
 ### Parsers
 
@@ -150,6 +164,14 @@ rest.post('https://twaud.io/api/v1/upload.json', {
     'sound[file]': rest.file('doug-e-fresh_the-show.mp3', null, 321567, null, 'audio/mpeg')
   }
 }).then(successCallback, errorCallback);
+
+// post JSON
+var jsonData = { id: 334 };
+rest.postJson('http://example.com/action', jsonData).then(successCallback, errorCallback);
+
+// put JSON
+var jsonData = { id: 334 };
+rest.putJson('http://example.com/action', jsonData).then(successCallback, errorCallback);
 ```
 
 TODO
