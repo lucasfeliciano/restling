@@ -16,8 +16,8 @@ _.forEach(httpVerbs, function(verb){
       } else {
         d.resolve({'data': result, 'response':response});
       }
-    }).on('error', function(err, response){
-      d.reject({'error': err, 'response': response });
+    }).on('error', function(error){
+      d.reject(error);
     }).on('timeout', function(ms){
       d.reject({'name': 'timeout', 'message':'Timeout after '+ms+'ms'});
     });
@@ -35,8 +35,8 @@ _.forEach(jsonMethods, function(verb){
       } else {
         d.resolve({'data': result, 'response':response});
       }
-    }).on('error', function(err, response){
-      d.reject({'error': err, 'response': response });
+    }).on('error', function(error){
+      d.reject(error);
     }).on('timeout', function(ms){
       d.reject({'name': 'timeout', 'message':'Timeout after '+ms+'ms'});
     });
