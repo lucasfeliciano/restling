@@ -10,15 +10,16 @@ var jsonMethods =['json', 'postJson', 'putJson'];
 _.forEach(httpVerbs, function(verb){
   exports[verb] = function(url, options){
     var d = Q.defer();
-    restler[verb](url, options).on('complete', function(data, response){
-      d.resolve({'data': data, 'response':response});
+    restler[verb](url, options).on('complete', function(result, response){
+      if (result instanceof Error) {
+        d.reject(result)
+      } else {
+        d.resolve({'data': result, 'response':response});
+      }
     }).on('error', function(err, response){
       d.reject({'error': err, 'response': response });
     }).on('timeout', function(ms){
-      d.reject({'error':{'error': 'timeout',
-                         'message':'Timeout after '+ms+'ms'
-                         }
-                });
+      d.reject({'name': 'timeout', 'message':'Timeout after '+ms+'ms'});
     });
     return d.promise;
   };
@@ -28,15 +29,16 @@ _.forEach(httpVerbs, function(verb){
 _.forEach(jsonMethods, function(verb){
   exports[verb] = function(url, data, options){
     var d = Q.defer();
-    restler[verb](url, data, options).on('complete', function(data, response){
-      d.resolve({'data': data, 'response':response});
+    restler[verb](url, data, options).on('complete', function(result, response){
+      if (result instanceof Error) {
+        d.reject(result)
+      } else {
+        d.resolve({'data': result, 'response':response});
+      }
     }).on('error', function(err, response){
       d.reject({'error': err, 'response': response });
     }).on('timeout', function(ms){
-      d.reject({'error':{'error': 'timeout',
-                         'message':'Timeout after '+ms+'ms'
-                         }
-                });
+      d.reject({'name': 'timeout', 'message':'Timeout after '+ms+'ms'});
     });
     return d.promise;
   };
