@@ -11,6 +11,16 @@ Installing
 npm install restling
 ```
 
+Basic Usage
+-----------
+```javascript
+rest.get('http://google.com').then(function(result){
+  console.log(result.data);
+}, function(error){
+  console.log(error.message);
+});
+
+```
 Features
 --------
 * Easy interface for common operations via http.request
@@ -144,7 +154,5 @@ rest.post('https://twaud.io/api/v1/upload.json', {
 
 TODO
 ----
-* json(url, data, options)
-* postJson(url, data, options)
-* putJson(url, data, options)
+* Unit tests
 * What do you need? Let me know or fork.
