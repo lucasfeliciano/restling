@@ -2,6 +2,7 @@
 var Q = require('q');
 var _ = require('lodash');
 var restler = require('restler');
+var async = require('async');
 
 var httpVerbs = ['request', 'get', 'post', 'put', 'del', 'head', 'patch'];
 var jsonMethods =['json', 'postJson', 'putJson'];
@@ -16,10 +17,10 @@ _.forEach(httpVerbs, function(verb){
       } else {
         d.resolve({'data': result, 'response':response});
       }
-    }).on('error', function(error){
-      d.reject(error);
+    }).on('error', function(err){
+      d.reject(err);
     }).on('timeout', function(ms){
-      d.reject({'name': 'timeout', 'message':'Timeout after '+ms+'ms'});
+      d.reject({'name': 'Timeout', 'message':'Timeout after '+ms+'ms'});
     });
     return d.promise;
   };
@@ -35,11 +36,34 @@ _.forEach(jsonMethods, function(verb){
       } else {
         d.resolve({'data': result, 'response':response});
       }
-    }).on('error', function(error){
-      d.reject(error);
+    }).on('error', function(err){
+      d.reject(err);
     }).on('timeout', function(ms){
-      d.reject({'name': 'timeout', 'message':'Timeout after '+ms+'ms'});
+      d.reject({'name': 'Timeout', 'message':'Timeout after '+ms+'ms'});
     });
     return d.promise;
   };
 });
+
+//Function to make parallel async http requests.
+exports.parallelGet = function(objs, finalCallback){
+  var wrappedObjs = _.map(objs, function(obj){
+    return function(callback){
+      callback(null, exports.get(obj.url, obj.options));
+    }
+  });
+
+  async.parallel(wrappedObjs, function(err, results){
+    Q.allSettled(results).then(function(promises){
+      var promisesValue = _.map(promises, function(promise){
+        if(promise.state === 'rejected'){
+          return promise.reason;
+        }
+        else if(promise.state === 'fulfilled'){
+          return promise.value;
+        }
+      });
+      finalCallback(err, promisesValue);
+    });
+  });
+};
