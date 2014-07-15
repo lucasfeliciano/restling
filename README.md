@@ -37,7 +37,7 @@ var rest = require('restling');
 
 rest.parallelGet([{'url':'http://google.com'},
                   {'url':'http://some/rest/api'}],
-                  function(err, result){
+                  function(err, results){
                     //handle results here
                 });
 ```
