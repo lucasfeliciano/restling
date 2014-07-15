@@ -42,7 +42,7 @@ rest.parallelGet([{'url':'http://google.com'},
                 });
 ```
 To make requests in parallel you have to pass an array of objects.
-Each object must have a key with the url and a OPTIONAL option key.
+Each object must have a `url` key with the path and a OPTIONAL `option` key.
 (for more options go to the "options" session below)
 
 Example:
