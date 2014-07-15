@@ -22,6 +22,35 @@ rest.get('http://google.com').then(function(result){
   console.log(error.message);
 });
 ```
+The result passed into the success callback is an object and have two keys:
+`data` and `response`
+Example: `{'data': 3, 'response': res}`
+
+The error passed into the error callback is an object and have two keys:
+`error` and `message`
+Example `{'error': Timeout, 'message':'Timeout after 234ms'}`
+
+Parallel Request Basic Usage
+----------------------------
+```javascript
+var rest = require('restling');
+
+rest.parallelGet([{'url':'http://google.com'},
+                  {'url':'http://some/rest/api'}],
+                  function(err, result){
+                    //manipulate the result here
+                });
+```
+To make requests in parallel you have to pass an array of objects.
+Each object must have a key with the url and a OPTIONAL option key.
+(for more options go to the "options" session below)
+
+Example:
+`{'url': http://url/to/api, 'options':{timeout:500}}`
+
+The result passed in the callback is an array containing the respectives results
+of the array you passed by param in ORDER. Can be the data or an error object.
+
 
 Features
 --------
