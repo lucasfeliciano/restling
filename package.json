@@ -1,6 +1,6 @@
 {
   "name": "restling",
-  "version": "0.0.9",
+  "version": "0.1.1",
   "description": "A nodejs library to make promise based asynchronous http requests.",
   "main": "restling.js",
   "scripts": {
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/lucasfeliciano/restling",
   "dependencies": {
+    "async": "^0.9.0",
     "lodash": "^2.4.1",
     "q": "^1.0.1",
     "restler": "^3.2.2"
