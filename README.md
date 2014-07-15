@@ -38,7 +38,7 @@ var rest = require('restling');
 rest.parallelGet([{'url':'http://google.com'},
                   {'url':'http://some/rest/api'}],
                   function(err, result){
-                    //manipulate the result here
+                    //handle results here
                 });
 ```
 To make requests in parallel you have to pass an array of objects.
