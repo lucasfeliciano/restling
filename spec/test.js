@@ -23,11 +23,11 @@ describe('Module', function(){
 });
 
 describe('Requests', function(){
-  it('should return promises',function(){
+  it('should return a fulfilled promise',function(){
     return rest.get('http://google.com').should.be.fulfilled;
   });
 
-  it('should return promises',function(){
+  it('should return a rejected promise',function(){
     return rest.get('http://goodasdasdsadasgle.com').should.be.rejectedWith(Error);
   });
 });
