@@ -11,9 +11,13 @@ var methods = ['request', 'get', 'post', 'put', 'del',
                'parallelGet'];
 
 describe('Module', function(){
+  it('should be a object',function(){
+    rest.should.be.a('object');
+  });
+
   it('should have all methods', function(){
     _.forEach(methods, function(method){
-      rest.should.be.a('object').and.have.property(method);
+      rest.should.have.property(method);
     })
   });
 });
