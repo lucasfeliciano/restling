@@ -1,4 +1,4 @@
-Restling
+Restling [![Build Status](https://travis-ci.org/lucasfeliciano/restling.svg?branch=master)](https://travis-ci.org/lucasfeliciano/restling)
 =======
 
 A nodejs library to make promise based asynchronous http requests.
