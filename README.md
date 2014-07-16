@@ -4,6 +4,39 @@ Restling [![Build Status](https://travis-ci.org/lucasfeliciano/restling.svg?bran
 A nodejs library to make promise based asynchronous http requests.
 This module uses [restler](https://github.com/danwrong/restler) to make the http calls and [q](https://github.com/kriskowal/q) to transform it in promises.
 
+Why use promise?
+----------
+I'll show you two codes that do the same thing, one using the default approach (callbacks) and the other using promises to you see the difference.
+
+If you work with callbacks in a asynchronous environment you probably have seen this type of code. The famous *callback hell* or *pyramid of doom* :(
+#### Callback approach:
+```javascript
+User.logIn("user", "pass", {
+  success: function(user) {
+    query.find({
+      success: function(results) {
+        results[0].save({ key: value }, {
+          success: function(result) {
+            // the object was saved.
+          }
+        });
+      }
+    });
+  }
+});
+```
+
+#### Promise approach:
+Use promises and you don't have to see *callback hells*  again :)
+```javacript
+User.logIn("user", "pass").then(function(user) {
+  return query.find();
+}).then(function(results) {
+  return results[0].save({ key: value });
+}).then(function(result) {
+  // the object was saved.
+});
+```
 Installing
 ----------
 
