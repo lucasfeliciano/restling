@@ -23,12 +23,12 @@ rest.get('http://google.com').then(function(result){
 });
 ```
 The result passed into the success callback is an object and have two keys:
-`data` and `response`
+`data` and `response`.
 Example: `{'data': 3, 'response': res}`
 
 The error passed into the error callback is an object and have two keys:
 `error` and `message`
-Example `{'error': Timeout, 'message':'Timeout after 234ms'}`
+Example: `{'error': 'Timeout', 'message':'Timeout after 234ms'}`
 
 Parallel Request Basic Usage
 ----------------------------
