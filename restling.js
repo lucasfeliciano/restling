@@ -7,6 +7,7 @@ var async = require('async');
 var httpVerbs = ['request', 'get', 'post', 'put', 'del', 'head', 'patch'];
 var jsonMethods =['json', 'postJson', 'putJson'];
 
+
 // Function that generate the restler wrapper for all the basic http verbs to return promise
 _.forEach(httpVerbs, function(verb){
   exports[verb] = function(url, options){
@@ -46,24 +47,59 @@ _.forEach(jsonMethods, function(verb){
 });
 
 //Function to make parallel async http requests.
-exports.parallelGet = function(objs, finalCallback){
-  var wrappedObjs = _.map(objs, function(obj){
-    return function(callback){
-      callback(null, exports.get(obj.url, obj.options));
+exports.parallelGet = function(requests, finalCallback){
+  var wrappedRequests;
+  if (_.isArray(requests)) {
+    wrappedRequests = _.map(requests, function(request){
+      return wrapRequestObject(request);
+    });
+  }
+  else if (_.isObject(requests)) {
+    wrappedRequests = _.mapValues(requests, function(request){
+      return wrapRequestObject(request);
+    });
+  }
+
+  async.parallel(wrappedRequests, function(err, results){
+    var promisesValue;
+    if(_.isArray(results)) {
+      Q.allSettled(results).then(function(promises){
+        promisesValue = _.map(promises, function(promise){
+          return getPromiseValue(promise);
+        });
+        finalCallback(err, promisesValue);
+      });
+    }
+    else if (_.isObject(results)){
+      var keys = _.keys(results);
+      var values = _.values(results);
+
+      Q.allSettled(values).then(function(promises){
+        values = _.map(promises, function(promise){
+          return getPromiseValue(promise);
+        });
+        finalCallback(err, _.zipObject(keys, values));
+      });
+
+
     }
   });
-
-  async.parallel(wrappedObjs, function(err, results){
-    Q.allSettled(results).then(function(promises){
-      var promisesValue = _.map(promises, function(promise){
-        if(promise.state === 'rejected'){
-          return promise.reason;
-        }
-        else if(promise.state === 'fulfilled'){
-          return promise.value;
-        }
-      });
-      finalCallback(err, promisesValue);
-    });
-  });
 };
+
+//Auxilar functions
+function wrapRequestObject(request){
+  return function(callback){
+    callback(null, exports.get(request.url, request.options));
+  }
+}
+
+function getPromiseValue(promise) {
+  var pValue;
+  if (promise.state === 'rejected') {
+    pValue = promise.reason;
+  }
+  else if (promise.state === 'fulfilled') {
+    pValue = promise.value;
+  }
+  return pValue;
+}
