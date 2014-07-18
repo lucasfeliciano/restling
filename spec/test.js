@@ -1,9 +1,9 @@
-var chai   = require('chai');
-var should = chai.should();
-var chaiAsPromised = require("chai-as-promised");
-var rest   = require('../restling');
-var _      = require('lodash');
+var chai           = require('chai');
+var chaiAsPromised = require('chai-as-promised');
+var rest           = require('../restling');
+var _              = require('lodash');
 
+chai.should();
 chai.use(chaiAsPromised);
 
 var methods = ['request', 'get', 'post', 'put', 'del',
@@ -23,11 +23,12 @@ describe('Module', function(){
 });
 
 describe('Requests', function(){
+
   it('should return a fulfilled promise',function(){
-    return rest.get('http://google.com').should.be.fulfilled;
+    return rest.get('http://google.com').should.eventually.be.fulfilled;
   });
 
   it('should return a rejected promise',function(){
-    return rest.get('http://goodasdasdsadasgle.com').should.be.rejectedWith(Error);
+    return rest.get('http://goodasdasdsadasgle.com').should.eventually.be.rejectedWith(Error);
   });
 });
