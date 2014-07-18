@@ -46,6 +46,7 @@ npm install restling
 
 Basic Usage
 -----------
+
 ```javascript
 var rest = require('restling');
 
@@ -65,25 +66,48 @@ Example: `{'error': 'Timeout', 'message':'Timeout after 234ms'}`
 
 Parallel Request Basic Usage
 ----------------------------
+
+Run requests in parallel, without waiting until the previous
+requests has completed.
+
+To make this we will use a `myRequest` object which contains two keys:
+* `url` : Path to make the request.
+* `options` : __OPTIONAL__ - Some extra params and settings of the request.
+
+Example of `myRequest` object: `{'url': 'http://path/to/api', options:{timeout: 5000}}`
+
+#### Passing a object
+
+Each property must be a `myRequest` object that will executed. The results will be passed to the callback as `results` and each property is fulfilled with a object `{data: value, response: res}` or a error.
+
+
+```javascript
+var rest = require('restling');
+
+rest.parallelGet({'google':{'url':'http://google.com'},
+                  'api':{'url':'http://some/rest/api'}},
+                  function(err, results){
+                    // handle results here
+                    // result is {google: response1, api:response2}
+                });
+```
+
+#### Passing a array
+
+It is also possible pass an array of `myRequest` object.
+The results will be passed to callback as `results` and it is an array containing the respectives results
+of the array you passed by param in ORDER. Can be the `{data: value, response: res}` or an error.
+
 ```javascript
 var rest = require('restling');
 
 rest.parallelGet([{'url':'http://google.com'},
                   {'url':'http://some/rest/api'}],
                   function(err, results){
-                    //handle results here
+                    // handle results here
+                    // result is [response1, response2]
                 });
 ```
-To make requests in parallel you have to pass an array of objects.
-Each object must have a `url` key with the path and a OPTIONAL `option` key.
-(for more options go to the "options" session below)
-
-Example:
-`{'url': http://url/to/api, 'options':{timeout:500}}`
-
-The result passed in the callback is an array containing the respectives results
-of the array you passed by param in ORDER. Can be the data or an error object.
-
 
 Features
 --------
@@ -141,6 +165,10 @@ Send json `data` via POST method.
 ### putJson(url, data, options)
 
 Send json `data` via PUT method.
+
+### parallelGet(requestObjects, callback)
+
+Run the `requestObjects` array/object in parallel, without waiting until the previous request has completed.
 
 ### Parsers
 
