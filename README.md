@@ -78,7 +78,7 @@ Example of `myRequest` object: `{'url': 'http://path/to/api', options:{timeout: 
 
 #### Passing a object
 
-Each property must be a `myRequest` object that will executed. The results will be passed to the callback as `results` and each property is fulfilled with a object `{data: value, response: res}` or a error.
+Each property must be a `myRequest` object that will be executed. The results will be passed to the callback as `results` and each property is fulfilled with a object `{data: value, response: res}` or a error.
 
 
 ```javascript
@@ -266,5 +266,5 @@ rest.putJson('http://example.com/action', jsonData).then(successCallback, errorC
 
 TODO
 ----
-* Unit tests
+* Test parallelGet function.
 * What do you need? Let me know or fork.

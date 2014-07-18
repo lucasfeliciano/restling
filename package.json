@@ -1,6 +1,6 @@
 {
   "name": "restling",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "A nodejs library to make it easy perform promise based asynchronous http requests.",
   "main": "restling.js",
   "scripts": {
