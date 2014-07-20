@@ -80,8 +80,6 @@ exports.parallelGet = function(requests, finalCallback){
         });
         finalCallback(err, _.zipObject(keys, values));
       });
-
-
     }
   });
 };
