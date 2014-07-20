@@ -1,6 +1,6 @@
 {
   "name": "restling",
-  "version": "0.1.7",
+  "version": "0.2.7",
   "description": "A nodejs library to make it easy perform promise based asynchronous http requests.",
   "main": "restling.js",
   "scripts": {
@@ -35,7 +35,6 @@
   "devDependencies": {
     "chai": "^1.9.1",
     "chai-as-promised": "^4.1.1",
-    "nock": "^0.42.1",
-    "vows": "^0.7.0"
+    "nock": "^0.42.1"
   }
 }
