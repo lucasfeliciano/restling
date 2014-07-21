@@ -1,4 +1,4 @@
-Restling [![Build Status](https://travis-ci.org/lucasfeliciano/restling.svg?branch=master)](https://travis-ci.org/lucasfeliciano/restling)
+Restling [![Build Status](https://travis-ci.org/lucasfeliciano/restling.svg?branch=master)](https://travis-ci.org/lucasfeliciano/restling) [![Dependency Status](https://david-dm.org/lucasfeliciano/restling.svg)](https://david-dm.org/lucasfeliciano/restling) [![NPM version](https://badge.fury.io/js/restling.svg)](http://badge.fury.io/js/restling)
 =======
 
 A nodejs library to make promise based asynchronous http requests.
@@ -269,5 +269,5 @@ rest.putJson('http://example.com/action', jsonData).then(successCallback, errorC
 
 TODO
 ----
-* Test parallelGet function.
+* Parallel post
 * What do you need? Let me know or fork.
