@@ -1,7 +1,7 @@
 {
   "name": "restling",
-  "version": "0.3.2",
-  "description": "A nodejs library to make it easy perform promise based asynchronous http requests.",
+  "version": "0.3.3",
+  "description": "A nodejs library to make it easy to perform promise based asynchronous http requests.",
   "main": "restling.js",
   "scripts": {
     "test": "mocha spec/test.js"

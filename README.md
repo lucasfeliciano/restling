@@ -56,11 +56,11 @@ rest.get('http://google.com').then(function(result){
   console.log(error.message);
 });
 ```
-The result passed into the success callback is an object and have two keys:
+The result passed into the success callback is an object with two keys:
 `data` and `response`.
 Example: `{'data': 3, 'response': res}`
 
-The error passed into the error callback is an object and have two keys:
+The error passed into the error callback is an object with two keys:
 `error` and `message`
 Example: `{'error': 'Timeout', 'message':'Timeout after 234ms'}`
 
