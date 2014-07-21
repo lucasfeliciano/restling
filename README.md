@@ -78,35 +78,38 @@ Example of `myRequest` object: `{'url': 'http://path/to/api', options:{timeout: 
 
 #### Passing a object
 
-Each property must be a `myRequest` object that will be executed. The results will be passed to the callback as `results` and each property is fulfilled with a object `{data: value, response: res}` or a error.
+Each property must be a `myRequest` object that will be executed.
+The return is a promise with a value that is a object containing each property of the object passed with their respective value.
 
 
 ```javascript
 var rest = require('restling');
+var obj  = {'google':{'url':'http://google.com'},
+            'api':{'url':'http://some/rest/api'}}
 
-rest.parallelGet({'google':{'url':'http://google.com'},
-                  'api':{'url':'http://some/rest/api'}},
-                  function(err, results){
-                    // handle results here
-                    // result is {google: response1, api:response2}
-                });
+rest.parallelGet(obj).then(function(result){
+  // handle result here
+  // result is {google: responseFromGoogle, api: responseFromApi}
+},function(err){
+  // handle error here
+});
 ```
-
 #### Passing a array
 
 It is also possible pass an array of `myRequest` object.
-The results will be passed to callback as `results` and it is an array containing the respectives results
-of the array you passed by param in ORDER. Can be the `{data: value, response: res}` or an error.
+THe return is a promise with a value a array which each index contain it respective value in order.
 
 ```javascript
-var rest = require('restling');
+var rest  = require('restling');
+var array = [{'url':'http://google.com'},
+             {'url':'http://some/rest/api'}]
 
-rest.parallelGet([{'url':'http://google.com'},
-                  {'url':'http://some/rest/api'}],
-                  function(err, results){
-                    // handle results here
-                    // result is [response1, response2]
-                });
+rest.parallelGet(array).then(function(result){
+  // handle results here
+  // result is [responseFromGoogle, responseFromApi]
+},function(err){
+  // handle error here
+});
 ```
 
 Features
