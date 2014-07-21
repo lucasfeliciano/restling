@@ -27,66 +27,56 @@ describe('Module', function(){
   });
 });
 
-describe('Requests', function(){
+describe('Request Success', function(){
+  var result;
+  result = rest.get('http://google.com');
 
-  it('should return a fulfilled promise', function(){
-    return rest.get('http://google.com').should.eventually.be.fulfilled;
+  it('should return a fulfilled promise with a object and property data', function(){
+    return result.should.eventually.be.fulfilled.a('object').and.have.property('data');
   });
+});
 
-  it('should return a rejected promise', function(){
-    return rest.get('http://goodasdasdsadasgle.com').should.eventually.be.rejectedWith(Error);
+describe('Request Error', function(){
+  var result;
+  result = rest.get('http://goodasdasdsadasgle.com');
+
+  it('should return a rejected promise with a error object', function(){
+    return result.should.eventually.be.rejectedWith(Error);
   });
 });
 
 describe('Parallel requests passing a object', function(){
-  var results;
-  rest.parallelGet({'one':{'url':'http://www.google.com'}, 'two':{'url':'http://googldasdadase.com'}}, function(err, result){
-    results = result;
+  var result;
+  result = rest.parallelGet({'one':{'url':'http://www.google.com'}, 'two':{'url':'http://googldasdadase.com'}});
+
+  it('should return a promise and when resolved must be object', function(){
+    result.should.exist.and.be.a('object');
+    return result.should.eventually.be.fulfilled.a('object');
   });
 
-  it('should return a object', function(){
-    results.should.exist.and.be.a('object');
+  it('should have property "one" being succeeded object', function() {
+    return result.should.eventually.have.property('one').and.have.property('data');
   });
 
-  it('should return a object with properties "one" and "two"', function() {
-    results.should.have.property('one');
-    results.should.have.property('two');
-  });
-
-  it('should return a object with property "one" being succeeded object', function() {
-    results.one.should.have.property('data');
-    results.one.should.have.property('response');
-  });
-
-  it('should return a object with property "two" being a error object', function() {
-    results.two.should.have.property('message');
-    results.two.should.have.property('code');
+  it('should have property "two" being a error object', function() {
+   return result.should.eventually.have.property('two').and.have.property('code');
   });
 });
 
 describe('Parallel requests passing a array', function(){
-  var results;
-  rest.parallelGet([{'url':'http://www.google.com'}, {'url':'http://googldasdadase.com'}], function(err, result){
-    results = result;
+  var result;
+  result = rest.parallelGet([{'url':'http://www.google.com'}, {'url':'http://googldasdadase.com'}]);
+
+  it('should return a promise and when resolved must be array with length 2', function(){
+    result.should.exist.and.be.a('object');
+    return result.should.eventually.be.fulfilled.a('array').and.have.length(2);
   });
 
-  it('should return a array', function(){
-    results.should.exist.and.be.a('array');
+  it('should return a promise with a array and in the index 0 a succeeded object', function() {
+    return result.should.eventually.be.fulfilled.and.have.property('0').a('object').and.have.property('data');
   });
 
-  it('should return a array with length 2', function() {
-    results.should.exist.and.have.length(2);
-  });
-
-  it('should return a array with index 0 a being succeeded object', function() {
-    results[0].should.exist;
-    results[0].should.have.property('data');
-    results[0].should.have.property('response');
-  });
-
-  it('should return a array with index 1 being a error object', function() {
-    results[1].should.exist;
-    results[1].should.have.property('message');
-    results[1].should.have.property('code');
-  });
+  it('should return a promise with a array and in the index 1 a error object', function() {
+    return result.should.eventually.be.fulfilled.and.have.property('1').a('object').and.have.property('code');
+  })
 });

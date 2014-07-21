@@ -49,42 +49,56 @@ _.forEach(jsonMethods, function(verb){
 //Function to make parallel async http requests.
 exports.parallelGet = function(requests, finalCallback){
   var wrappedRequests;
+
+  wrappedRequests = wrapRequests(requests);
+  var d = Q.defer();
+  async.parallel(wrappedRequests, function(err, results){
+    if(err){
+      q.reject(err);
+    }
+    else {
+      var promisesValue;
+      if(_.isArray(results)) {
+        Q.allSettled(results).then(function(promises){
+          promisesValue = _.map(promises, function(promise){
+            return getPromiseValue(promise);
+          });
+          d.resolve(promisesValue);
+        });
+      }
+      else if (_.isObject(results)){
+        var keys = _.keys(results);
+        var values = _.values(results);
+
+        Q.allSettled(values).then(function(promises){
+          values = _.map(promises, function(promise){
+            return getPromiseValue(promise);
+          });
+          d.resolve(_.zipObject(keys, values));
+        });
+      }
+    }
+  });
+  return d.promise;
+};
+
+//Auxilar functions
+
+function wrapRequests(requests) {
+  var requestsWrapped;
   if (_.isArray(requests)) {
-    wrappedRequests = _.map(requests, function(request){
+    requestsWrapped = _.map(requests, function(request){
       return wrapRequestObject(request);
     });
   }
   else if (_.isObject(requests)) {
-    wrappedRequests = _.mapValues(requests, function(request){
+    requestsWrapped = _.mapValues(requests, function(request){
       return wrapRequestObject(request);
     });
   }
+  return requestsWrapped;
+}
 
-  async.parallel(wrappedRequests, function(err, results){
-    var promisesValue;
-    if(_.isArray(results)) {
-      Q.allSettled(results).then(function(promises){
-        promisesValue = _.map(promises, function(promise){
-          return getPromiseValue(promise);
-        });
-        finalCallback(err, promisesValue);
-      });
-    }
-    else if (_.isObject(results)){
-      var keys = _.keys(results);
-      var values = _.values(results);
-
-      Q.allSettled(values).then(function(promises){
-        values = _.map(promises, function(promise){
-          return getPromiseValue(promise);
-        });
-        finalCallback(err, _.zipObject(keys, values));
-      });
-    }
-  });
-};
-
-//Auxilar functions
 function wrapRequestObject(request){
   return function(callback){
     callback(null, exports.get(request.url, request.options));
