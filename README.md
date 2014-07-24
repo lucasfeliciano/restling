@@ -1,8 +1,15 @@
-Restling [![Build Status](https://travis-ci.org/lucasfeliciano/restling.svg?branch=master)](https://travis-ci.org/lucasfeliciano/restling) [![Dependency Status](https://david-dm.org/lucasfeliciano/restling.svg)](https://david-dm.org/lucasfeliciano/restling) [![NPM version](https://badge.fury.io/js/restling.svg)](http://badge.fury.io/js/restling)
-=======
+<a href="http://promisesaplus.com/">
+    <img src="http://promisesaplus.com/assets/logo-small.png" alt="Promises/A+ logo"
+         title="Promises/A+ 1.1 compliant" align="right" />
+</a>
+
+[![Build Status](https://travis-ci.org/lucasfeliciano/restling.svg?branch=master)](https://travis-ci.org/lucasfeliciano/restling) [![Dependency Status](https://david-dm.org/lucasfeliciano/restling.svg)](https://david-dm.org/lucasfeliciano/restling) [![NPM version](https://badge.fury.io/js/restling.svg)](http://badge.fury.io/js/restling)
+
+Restling
+---------
 
 A nodejs library to make promise based asynchronous http requests.
-This module uses [restler](https://github.com/danwrong/restler) to make the http calls and [q](https://github.com/kriskowal/q) to transform it in promises.
+This module uses [restler](https://github.com/danwrong/restler) to make the http calls and [bluebird](https://github.com/petkaantonov/bluebird) to transform it in promises.
 
 Why use promise?
 ----------
@@ -60,9 +67,7 @@ The result passed into the success callback is an object with two keys:
 `data` and `response`.
 Example: `{'data': 3, 'response': res}`
 
-The error passed into the error callback is an object with two keys:
-`error` and `message`
-Example: `{'error': 'Timeout', 'message':'Timeout after 234ms'}`
+The error passed into the error callback is an instance of Error.
 
 Parallel Request Basic Usage
 ----------------------------
