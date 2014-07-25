@@ -1,19 +1,19 @@
 var rest           = require('../restling'),
-    chai           = require('chai'),
-    chaiAsPromised = require('chai-as-promised'),
-    nock           = require('nock');
+  chai           = require('chai'),
+  chaiAsPromised = require('chai-as-promised'),
+  nock           = require('nock');
 
 chai.use(chaiAsPromised);
 chai.should();
 
 nock('http://www.google.com')
   .get('/')
-  .times(10)
+  .times(20)
   .reply(200, 'Any response.');
 
 var methods = ['request', 'get', 'post', 'put', 'del',
   'head', 'patch', 'json', 'postJson', 'putJson',
-  'parallelGet'];
+  'settleAsync'];
 
 describe('Module', function(){
   it('should be a object',function(){
@@ -45,9 +45,9 @@ describe('Request Error', function(){
   });
 });
 
-describe('Parallel requests passing a object', function(){
+describe('Settle requests passing a object', function(){
   var result;
-  result = rest.parallelGet({'one':{'url':'http://www.google.com'}, 'two':{'url':'http://googldasdadase.com'}});
+  result = rest.settleAsync({'one':{'url':'http://www.google.com'}, 'two':{'url':'http://googldasdadase.com'}});
 
   it('should return a promise and when resolved must be object', function(){
     result.should.exist.and.be.a('object');
@@ -59,13 +59,13 @@ describe('Parallel requests passing a object', function(){
   });
 
   it('should have property "two" being a error object', function() {
-   return result.should.eventually.have.property('two').and.have.property('code');
+    return result.should.eventually.have.property('two').and.have.property('code');
   });
 });
 
-describe('Parallel requests passing a array', function(){
+describe('Settle requests passing a array', function(){
   var result;
-  result = rest.parallelGet([{'url':'http://www.google.com'}, {'url':'http://googldasdadase.com'}]);
+  result = rest.settleAsync([{'url':'http://www.google.com'}, {'url':'http://googldasdadase.com'}]);
 
   it('should return a promise and when resolved must be array with length 2', function(){
     result.should.exist.and.be.a('object');
@@ -79,4 +79,55 @@ describe('Parallel requests passing a array', function(){
   it('should return a promise with a array and in the index 1 a error object', function() {
     return result.should.eventually.be.fulfilled.and.have.property('1').a('object').and.have.property('code');
   })
+});
+
+describe('allAsync passing a array with one wrong url address', function(){
+  var result;
+  result = rest.allAsync([{'url':'http://www.google.com'}, {'url':'http://googldasdadase.com'}]);
+
+  it('should return a rejected promise with error ENOTFOUND', function(){
+    result.should.exist.and.be.a('object');
+    return result.should.eventually.be.rejected.and.have.property('message', 'getaddrinfo ENOTFOUND');
+  });
+});
+
+describe('allAsync passing a array with two succeeded url address ', function(){
+  var result;
+  result = rest.allAsync([{'url':'http://www.google.com'}, {'url':'http://www.google.com'}]);
+
+  it('should return a fulfilled promise with a array and in the index 0 a succeeded object', function() {
+    return result.should.eventually.be.fulfilled.and.have.property('0').a('object').and.have.property('data');
+  });
+
+  it('should return a fulfilled promise with a array and in the index 1 a succeeded object', function() {
+    return result.should.eventually.be.fulfilled.and.have.property('1').a('object').and.have.property('data');
+  })
+});
+
+describe('allAsync passing a object with one wrong url address', function(){
+  var result;
+  result = rest.allAsync({'one':{'url':'http://www.google.com'}, 'two':{'url':'http://googldasdadase.com'}});
+
+  it('should return a rejected promise with error ENOTFOUND', function(){
+    result.should.exist.and.be.a('object');
+    return result.should.eventually.be.rejected.and.have.property('message', 'getaddrinfo ENOTFOUND');
+  });
+});
+
+describe('allAsync passing a object with two succeeded url address ', function(){
+  var result;
+  result = rest.allAsync({'one':{'url':'http://www.google.com'}, 'two':{'url':'http://www.google.com'}});
+
+  it('should return a fulfilled promise', function(){
+    result.should.exist.and.be.a('object');
+    return result.should.eventually.be.fulfilled.a('object');
+  });
+
+  it('should have property "one" being succeeded object', function() {
+    return result.should.eventually.have.property('one').and.have.property('data');
+  });
+
+  it('should have property "two" being a error object', function() {
+    return result.should.eventually.have.property('two').and.have.property('data');
+  });
 });
