@@ -92,7 +92,7 @@ var rest = require('restling');
 var obj  = {'google':{'url':'http://google.com'},
             'api':{'url':'http://some/rest/api'}}
 
-rest.parallelGet(obj).then(function(result){
+rest.settleAsync(obj).then(function(result){
   // handle result here
   // result is {google: responseFromGoogle, api: responseFromApi}
 },function(err){
@@ -109,13 +109,16 @@ var rest  = require('restling');
 var array = [{'url':'http://google.com'},
              {'url':'http://some/rest/api'}]
 
-rest.parallelGet(array).then(function(result){
+rest.settleAsync(array).then(function(result){
   // handle results here
   // result is [responseFromGoogle, responseFromApi]
 },function(err){
   // handle error here
 });
 ```
+#### Using the `allAsync` instead `settleAsync`
+
+If you want to reject the return promise for the whole if one of the parallel request is rejected use `allAsync` instead of `settleAsync`.
 
 Features
 --------
@@ -174,7 +177,7 @@ Send json `data` via POST method.
 
 Send json `data` via PUT method.
 
-### parallelGet(requestObjects, callback)
+### settleAsync(requestObjects, callback)
 
 Run the `requestObjects` array/object in parallel, without waiting until the previous request has completed.
 
@@ -274,5 +277,5 @@ rest.putJson('http://example.com/action', jsonData).then(successCallback, errorC
 
 TODO
 ----
-* Parallel post
+
 * What do you need? Let me know or fork.
