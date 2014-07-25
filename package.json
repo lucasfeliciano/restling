@@ -1,6 +1,6 @@
 {
   "name": "restling",
-  "version": "0.4.1",
+  "version": "0.6.1",
   "description": "A nodejs library to make it easy to perform promise based asynchronous http requests.",
   "main": "restling.js",
   "scripts": {
@@ -18,7 +18,8 @@
     "promise",
     "restler",
     "rest",
-    "parallel"
+    "parallel",
+    "bluebird"
   ],
   "author": "Lucas Feliciano <mail@lucasfeliciano.com> (http://lucasfeliciano.com/)",
   "license": "MIT",

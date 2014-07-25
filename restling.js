@@ -74,22 +74,31 @@ _.forEach(jsonMethods, function(verb){
   };
 });
 
-//Function to make parallel async http requests.
-exports.parallelGet = function (myRequests) {
-  if (_.isArray(myRequests)) {
+exports.settleAsync = function(myRequests) {
 
-    return Promise.settle(wrapMyRequests(myRequests)).then(function(settledValues){
+  var wrapped = wrapToArray(myRequests);
+  if (_.isArray(myRequests)) {
+    return Promise.settle(wrapped).then(function(settledValues){
       return getSettledValues(settledValues);
     });
   }
   else if (_.isObject(myRequests)) {
     var keys = _.keys(myRequests);
-    var values = wrapMyRequests(myRequests);
 
-    return Promise.settle(values).then(function(settledValues) {
+    return Promise.settle(wrapped).then(function(settledValues) {
       var resolved = _.zipObject(keys, getSettledValues(settledValues));
       return  Promise.resolve(resolved);
     });
+  }
+};
+
+//Function to make parallel async http requests.
+exports.allAsync = function (myRequests) {
+  if (_.isArray(myRequests)) {
+    return Promise.all(wrapToArray(myRequests));
+  }
+  else if (_.isObject(myRequests)) {
+    return Promise.props(wrapToObject(myRequests));
   }
 };
 
@@ -111,8 +120,14 @@ function getPromiseValue(promise) {
   return promiseValue;
 }
 
-function wrapMyRequests(myRequests) {
-  return _.map(myRequests, function(myRequest){
-    return exports.get(myRequest.url, myRequest.options);
-  });
+function wrapToArray(myRequests) {
+    return _.map(myRequests, function(myRequest){
+      return exports.get(myRequest.url, myRequest.options);
+    });
 }
+
+function wrapToObject(myRequests){
+  return _.mapValues(myRequests, function(myRequest){
+    return exports.get(myRequest.url, myRequest.options);
+  })
+};
