@@ -1,3 +1,7 @@
+## 0.6.2
+
+ - Refactored wrapper function
+
 ## 0.6.1
 
  - Implemented `allAsync` feature.
