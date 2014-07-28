@@ -4,47 +4,15 @@ var _ = require('lodash');
 var restler = require('restler');
 var Promise = require('bluebird');
 
-var httpVerbs = ['request', 'get', 'post', 'put', 'del', 'head', 'patch'];
-var jsonMethods =['json', 'postJson', 'putJson'];
+var methods = ['request', 'get', 'post', 'put', 'del', 'head', 'patch', 'json', 'postJson', 'putJson'];
 
 
-// Function that generate the restler wrapper for all the basic http verbs to return promise
-_.forEach(httpVerbs, function(verb){
-  exports[verb] = function (url, options){
-    var request = restler[verb](url, options || {});
+// Function that generate the restler wrapper for all methods from restler to return promise
+_.forEach(methods, function(verb){
 
-    return new Promise(function(resolve, reject) {
-      request
-        .on('complete', function(data, response){
-          if (data instanceof Error) {
-            reject(data);
-          } else {
-            resolve({'data': data, 'response':response});
-          }
-        })
-        .on('success', function(data, response) {
-          resolve({'data': data, 'response': response});
-        })
-        .on('fail', function(data, response) {
-          resolve({'data': data, 'response': response});
-        })
-        .on('error', function(err) {
-          reject(err);
-        })
-        .on('abort', function() {
-          reject(new Promise.CancellationError());
-        })
-        .on('timeout', function() {
-          reject(new Promise.TimeoutError());
-        });
-    });
-  };
-});
-
-// Function that generate the restler wrapper for all the json methods to return promise
-_.forEach(jsonMethods, function(verb){
-  exports[verb] = function (url, data, options){
-    var request = restler[verb](url, data, options || {});
+  exports[verb] = function (args){
+    var self = this;
+    var request = restler[verb].apply(self, arguments);
 
     return new Promise(function(resolve, reject) {
       request
@@ -109,6 +77,7 @@ function getSettledValues(settledValues) {
     return getPromiseValue(settledValue);
   });
 }
+
 function getPromiseValue(promise) {
   var promiseValue;
 
@@ -121,13 +90,13 @@ function getPromiseValue(promise) {
 }
 
 function wrapToArray(myRequests) {
-    return _.map(myRequests, function(myRequest){
-      return exports.get(myRequest.url, myRequest.options);
-    });
+  return _.map(myRequests, function(myRequest){
+    return exports.get(myRequest.url, myRequest.options);
+  });
 }
 
 function wrapToObject(myRequests){
   return _.mapValues(myRequests, function(myRequest){
     return exports.get(myRequest.url, myRequest.options);
   })
-};
+}
