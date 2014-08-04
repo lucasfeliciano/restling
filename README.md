@@ -3,6 +3,8 @@
          title="Promises/A+ 1.1 compliant" align="right" />
 </a>
 
+[![NPM](https://nodei.co/npm/restling.png?downloads=true&stars=true)](https://nodei.co/npm/restling/)
+
 [![Build Status](https://travis-ci.org/lucasfeliciano/restling.svg?branch=master)](https://travis-ci.org/lucasfeliciano/restling) [![Dependency Status](https://david-dm.org/lucasfeliciano/restling.svg)](https://david-dm.org/lucasfeliciano/restling) [![NPM version](https://badge.fury.io/js/restling.svg)](http://badge.fury.io/js/restling)
 
 Restling
