@@ -16,18 +16,11 @@ _.forEach(methods, function(verb){
 
     return new Promise(function(resolve, reject) {
       request
-        .on('complete', function(data, response){
-          if (data instanceof Error) {
-            reject(data);
-          } else {
-            resolve({'data': data, 'response':response});
-          }
-        })
         .on('success', function(data, response) {
           resolve({'data': data, 'response': response});
         })
-        .on('fail', function(data, response) {
-          resolve({'data': data, 'response': response});
+        .on('fail', function(data) {
+          reject(data);
         })
         .on('error', function(err) {
           reject(err);
