@@ -1,3 +1,7 @@
+## 0.6.4
+
+ - Fail event from restler now reject promise.
+
 ## 0.6.2
 
  - Refactored wrapper function

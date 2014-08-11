@@ -37,7 +37,7 @@ User.logIn("user", "pass", {
 
 #### Promise approach:
 Use promises and you don't have to see *callback hells*  again :)
-```javacript
+```javascript
 User.logIn("user", "pass").then(function(user) {
   return query.find();
 }).then(function(results) {
