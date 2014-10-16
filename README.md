@@ -10,15 +10,15 @@
 Restling
 ---------
 
-A nodejs library to make promise based asynchronous http requests.
-This module uses [restler](https://github.com/danwrong/restler) to make the http calls and [bluebird](https://github.com/petkaantonov/bluebird) to transform it in promises.
+Restling is a lightweight Node.js module for building **promise-based asynchronous HTTP requests**.
+Under the hood it uses [restler](https://github.com/danwrong/restler) to make HTTP calls and [bluebird](https://github.com/petkaantonov/bluebird) to transform it in promises.
 
-Why use promise?
+Avoid callback hell
 ----------
-I'll show you two codes that do the same thing, one using the default approach (callbacks) and the other using promises to you see the difference.
 
-If you work with callbacks in a asynchronous environment you probably have seen this type of code. The famous *callback hell* or *pyramid of doom* :(
-#### Callback approach:
+Working on an asynchronous environment you have probably seen this:
+
+##### Traditional callback approach
 ```javascript
 User.logIn("user", "pass", {
   success: function(user) {
@@ -35,8 +35,8 @@ User.logIn("user", "pass", {
 });
 ```
 
-#### Promise approach:
-Use promises and you don't have to see *callback hells*  again :)
+##### With Restling
+
 ```javascript
 User.logIn("user", "pass").then(function(user) {
   return query.find();
