@@ -29,7 +29,7 @@ describe('Module', function(){
 
 describe('Request Success', function(){
   var result;
-  result = rest.get('http://google.com');
+  result = rest.get('http://www.google.com');
 
   it('should return a fulfilled promise with a object and property data', function(){
     return result.should.eventually.be.fulfilled.a('object').and.have.property('data');
