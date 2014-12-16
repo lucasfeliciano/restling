@@ -1,7 +1,7 @@
 {
   "name": "restling",
-  "version": "0.6.5",
-  "description": "A nodejs library to make it easy to perform promise based asynchronous http requests.",
+  "version": "0.7.0",
+  "description": "Restling is a lightweight Node.js module for building promise-based asynchronous HTTP requests.",
   "main": "restling.js",
   "scripts": {
     "test": "mocha spec/test.js"
