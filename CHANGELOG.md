@@ -1,3 +1,7 @@
+## 0.7.1
+ - Updated dependencies
+ - Fixed grammar in README
+
 ## 0.6.4
 
  - Fail event from restler now reject promise.
