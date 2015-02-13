@@ -84,12 +84,20 @@ function getPromiseValue(promise) {
 
 function wrapToArray(myRequests) {
   return _.map(myRequests, function(myRequest){
-    return exports.get(myRequest.url, myRequest.options);
+    return functionByMethod(myRequest);
   });
 }
 
 function wrapToObject(myRequests){
   return _.mapValues(myRequests, function(myRequest){
-    return exports.get(myRequest.url, myRequest.options);
-  })
+    return functionByMethod(myRequest);
+  });
 }
+
+function functionByMethod(myRequest) {
+  if (_.has(myRequest, 'options') && _.has(myRequest.options, 'method')) {
+    return exports.request(myRequest.url, myRequest.options);
+  }
+  return exports.get(myRequest.url, myRequest.options);
+};
+
