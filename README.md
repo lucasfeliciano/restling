@@ -83,7 +83,7 @@ To make this we will use a `myRequest` object which contains two keys:
 
 Example of `myRequest` object: `{'url': 'http://path/to/api', options:{timeout: 5000}}`
 
-#### Passing a object
+#### Passing an object
 
 Each property must be a `myRequest` object that will be executed.
 The return is a promise with a value that is a object containing each property of the object passed with their respective value.
@@ -101,7 +101,7 @@ rest.settleAsync(obj).then(function(result){
   // handle error here
 });
 ```
-#### Passing a array
+#### Passing an array
 
 It is also possible pass an array of `myRequest` object.
 THe return is a promise with a value a array which each index contain it respective value in order.
