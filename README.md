@@ -230,9 +230,11 @@ console.log('Data: ' + result.data);
 console.log('Response: ' + result.response);
 };
 
-var errorCallback = function(result){
-  console.log('Error: ' + error);
-  console.log('Response: ' + result.response);
+var errorCallback = function(error){
+  console.log('Error: ' + error.message);
+  if (error.response) {
+    console.log('Response: ' + error.response);
+  }
 };
 
 rest.get('http://google.com').then(successCallback, errorCallback);
