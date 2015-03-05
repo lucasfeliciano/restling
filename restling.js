@@ -19,8 +19,17 @@ _.forEach(methods, function(verb){
         .on('success', function(data, response) {
           resolve({'data': data, 'response': response});
         })
-        .on('fail', function(data) {
-          reject(data);
+        .on('fail', function(data, response) {
+          var url = request.url.href,
+            method = verb.toUpperCase(),
+            errorMessage = 'Cannot ' + method + ' ' + url,
+            error = new Error(errorMessage);
+
+          error.statusCode = response.statusCode;
+          error.response = response;
+          error.data = data;
+
+          reject(error);
         })
         .on('error', function(err) {
           reject(err);
