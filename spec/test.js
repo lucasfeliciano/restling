@@ -149,7 +149,9 @@ describe('allAsync passing a array with one wrong url address', function(){
 
   it('should return a rejected promise with error ENOTFOUND', function(){
     result.should.exist.and.be.a('object');
-    return result.should.eventually.be.rejected.and.have.property('message', 'getaddrinfo ENOTFOUND');
+    return result.should.eventually.be.rejected
+        .and.have.property('message')
+        .that.contain('getaddrinfo ENOTFOUND');
   });
 });
 
@@ -187,7 +189,9 @@ describe('allAsync passing a object with one wrong url address', function(){
 
   it('should return a rejected promise with error ENOTFOUND', function(){
     result.should.exist.and.be.a('object');
-    return result.should.eventually.be.rejected.and.have.property('message', 'getaddrinfo ENOTFOUND');
+    return result.should.eventually.be.rejected
+        .and.have.property('message')
+        .that.contain('getaddrinfo ENOTFOUND');
   });
 });
 
