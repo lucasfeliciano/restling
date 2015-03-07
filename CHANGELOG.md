@@ -1,3 +1,6 @@
+## 0.9.0
+ - Better error handling, now the promise reject a error object. Thanks @lo1tuma
+ - Added support to node 0.12 in Travis CI Thanks @lo1tuma
 ## 0.8.0
  - Now you can call `settleAsync()` and/or `allAsync()` passing any HTTP method.
 

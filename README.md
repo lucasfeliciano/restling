@@ -69,7 +69,17 @@ The result passed into the success callback is an object with two keys:
 `data` and `response`.
 Example: `{'data': 3, 'response': res}`
 
-The error passed into the error callback is an instance of Error.
+The error passed into the error callback is an instance of Error with the attributes below:
+
+Example:
+```javascript
+  {
+    'message'   : 'getaddrinfo ENOTFOUND',
+    'statusCode': 404,
+    'response:' : res,
+    'data'      : result.data
+  }
+```
 
 Parallel Request Basic Usage
 ----------------------------
