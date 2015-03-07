@@ -50,6 +50,24 @@ describe('Request Error', function(){
   });
 });
 
+describe('Request Fail', function () {
+  nock('http://example.com').get('/').reply(404, 'Any response.');
+
+  it('should reject with an error object that contains additional response information', function () {
+    var result = rest.get('http://example.com'),
+      expectedErrorMessage = 'Cannot GET http://example.com/';
+
+    return result.should.eventually.be.rejected
+      .and.then(function (error) {
+         error.should.have.property('message', expectedErrorMessage);
+         error.should.have.property('statusCode', 404);
+         error.should.have.property('response');
+         error.should.have.deep.property('response.statusCode', 404);
+         error.should.have.property('data', 'Any response.');
+      });
+  });
+});
+
 describe('Settle requests passing a object', function(){
   var result;
   result = rest.settleAsync({'one':{'url':'http://www.google.com'}, 'two':{'url':'http://googldasdadase.com'}});
@@ -131,7 +149,9 @@ describe('allAsync passing a array with one wrong url address', function(){
 
   it('should return a rejected promise with error ENOTFOUND', function(){
     result.should.exist.and.be.a('object');
-    return result.should.eventually.be.rejected.and.have.property('message', 'getaddrinfo ENOTFOUND');
+    return result.should.eventually.be.rejected
+        .and.have.property('message')
+        .that.contain('getaddrinfo ENOTFOUND');
   });
 });
 
@@ -169,7 +189,9 @@ describe('allAsync passing a object with one wrong url address', function(){
 
   it('should return a rejected promise with error ENOTFOUND', function(){
     result.should.exist.and.be.a('object');
-    return result.should.eventually.be.rejected.and.have.property('message', 'getaddrinfo ENOTFOUND');
+    return result.should.eventually.be.rejected
+        .and.have.property('message')
+        .that.contain('getaddrinfo ENOTFOUND');
   });
 });
 

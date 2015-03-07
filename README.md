@@ -69,7 +69,17 @@ The result passed into the success callback is an object with two keys:
 `data` and `response`.
 Example: `{'data': 3, 'response': res}`
 
-The error passed into the error callback is an instance of Error.
+The error passed into the error callback is an instance of Error with the attributes below:
+
+Example:
+```javascript
+  {
+    'message'   : 'getaddrinfo ENOTFOUND',
+    'statusCode': 404,
+    'response:' : res,
+    'data'      : result.data
+  }
+```
 
 Parallel Request Basic Usage
 ----------------------------
@@ -230,9 +240,11 @@ console.log('Data: ' + result.data);
 console.log('Response: ' + result.response);
 };
 
-var errorCallback = function(result){
-  console.log('Error: ' + error);
-  console.log('Response: ' + result.response);
+var errorCallback = function(error){
+  console.log('Error: ' + error.message);
+  if (error.response) {
+    console.log('Response: ' + error.response);
+  }
 };
 
 rest.get('http://google.com').then(successCallback, errorCallback);
