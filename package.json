@@ -1,6 +1,6 @@
 {
   "name": "restling",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Restling is a lightweight Node.js module for building promise-based asynchronous HTTP requests.",
   "main": "restling.js",
   "scripts": {
