@@ -4,7 +4,7 @@
   "description": "Restling is a lightweight Node.js module for building promise-based asynchronous HTTP requests.",
   "main": "restling.js",
   "scripts": {
-    "test": "mocha -R mocha-spec-cov-alt"
+    "test": "mocha -R mocha-lcov-reporter > .coverage/coverage.lcov"
   },
   "repository": {
     "type": "git",
