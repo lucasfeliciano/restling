@@ -38,6 +38,7 @@
     "chai": "^1.9.1",
     "chai-as-promised": "^4.1.1",
     "coveralls": "^2.11.2",
+    "grunt-coveralls": "^1.0.0",
     "jshint": "^2.8.0",
     "mocha": "^2.2.5",
     "mocha-spec-cov-alt": "^0.3.0",
