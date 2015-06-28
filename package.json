@@ -40,6 +40,7 @@
     "coveralls": "^2.11.2",
     "jshint": "^2.8.0",
     "mocha": "^2.2.5",
+    "mocha-spec-cov-alt": "^0.3.0",
     "nock": "^0.59.1"
   },
   "config": {
