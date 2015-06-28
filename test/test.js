@@ -1,3 +1,9 @@
+require('blanket')({
+    pattern: function (filename) {
+        return !/node_modules/.test(filename);
+    }
+});
+
 var rest           = require('../restling'),
   chai           = require('chai'),
   chaiAsPromised = require('chai-as-promised'),
