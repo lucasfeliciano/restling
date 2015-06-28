@@ -46,7 +46,7 @@
   "config": {
     "blanket": {
       "spec-cov": {
-        "threshold": 100
+        "threshold": 80
       }
     }
   }
