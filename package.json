@@ -29,7 +29,7 @@
   "homepage": "https://github.com/lucasfeliciano/restling",
   "dependencies": {
     "bluebird": "^2.3.11",
-    "lodash": "^3.2.0",
+    "lodash": "^4.17.5",
     "restler": "^3.2.2"
   },
   "devDependencies": {
